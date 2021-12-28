@@ -1,0 +1,59 @@
+﻿@model IEnumerable<BalanceProject2.Models.Personal_accounts>
+
+<form action="~/Home/AddPA">
+    <button class="btn btn-primary">Создать лицевой счёт</button>
+</form>
+<table class="table">
+    <tr>
+        <th>
+            Номер
+        </th>
+        <th>
+            Фамилия
+        </th>
+        <th>
+            Имя
+        </th>
+        <th>
+           Отчетсво
+        </th>
+        <th>
+            Номер квартиры
+        </th>
+        <th>
+            Пользователь
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Patronymic)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Apartment_Number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Users.Login)
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "UpdatePA", new { id=item.Id_Personal_accounts }) 
+            @Html.ActionLink("Удалить", "DeletePA", new { id=item.Id_Personal_accounts })
+        </td>
+    </tr>
+}
+
+</table>
+<div>
+    @Html.ActionLink("Админская панель", "AdminPanel")
+</div>

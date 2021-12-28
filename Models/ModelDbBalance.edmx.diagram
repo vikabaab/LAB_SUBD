@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0d61d0be89ca4a9d94a11c5103c6ae03" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="ModelDb.Headings" Width="1.5" PointX="7.5" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelDb.Payments" Width="1.5" PointX="7.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelDb.Personal_accounts" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelDb.Roles" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelDb.Saldo" Width="1.5" PointX="7.5" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelDb.Users" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <AssociationConnector Association="ModelDb.FK__Headings__Id_Per__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="ModelDb.FK__Payments__Id_Per__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="ModelDb.FK__Personal___Id_Us__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="ModelDb.FK__Saldo__Id_Person__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="ModelDb.FK__Users__Id_Role__3A81B327" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ModelDb.SaldoView" Width="1.5" PointX="2.5" PointY="1.125" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

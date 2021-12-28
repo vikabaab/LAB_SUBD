@@ -1,0 +1,47 @@
+﻿@model BalanceProject2.Models.Payments
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Платежи</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id_Payment)
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Платёж</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Payment, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Payment, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Дата</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Data, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Data, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Личный аккаунт</label>
+        <div class="col-md-10">
+            @Html.DropDownList("Id_Personal_accounts", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Id_Personal_accounts, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Сохранить" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Вернуться на лист платежей", "ListP")
+</div>

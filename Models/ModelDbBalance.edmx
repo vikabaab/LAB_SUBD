@@ -1,0 +1,469 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище ModelDb" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Headings">
+          <Key>
+            <PropertyRef Name="Id_Headings" />
+          </Key>
+          <Property Name="Id_Headings" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Accrual" Type="int" Nullable="false" />
+          <Property Name="Data" Type="datetime" Nullable="false" />
+          <Property Name="Id_Personal_accounts" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="Id_Payment" />
+          </Key>
+          <Property Name="Id_Payment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Payment" Type="int" Nullable="false" />
+          <Property Name="Data" Type="datetime" Nullable="false" />
+          <Property Name="Id_Personal_accounts" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Personal_accounts">
+          <Key>
+            <PropertyRef Name="Id_Personal_accounts" />
+          </Key>
+          <Property Name="Id_Personal_accounts" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Number" Type="int" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronymic" Type="varchar" MaxLength="50" />
+          <Property Name="Apartment_Number" Type="int" Nullable="false" />
+          <Property Name="Id_User" Type="int" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id_Role" />
+          </Key>
+          <Property Name="Id_Role" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Saldo">
+          <Key>
+            <PropertyRef Name="Id_Saldo" />
+          </Key>
+          <Property Name="Id_Saldo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Input" Type="int" Nullable="false" />
+          <Property Name="Data" Type="datetime" Nullable="false" />
+          <Property Name="Id_Personal_accounts" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id_User" />
+          </Key>
+          <Property Name="Id_User" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="Id_Role" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "Test.dbo.SaldoView" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="SaldoView">
+          <Key>
+            <PropertyRef Name="Number" />
+            <PropertyRef Name="Payment" />
+            <PropertyRef Name="Accrual" />
+            <PropertyRef Name="Input" />
+            <PropertyRef Name="Data" />
+          </Key>
+          <Property Name="Number" Type="int" Nullable="false" />
+          <Property Name="Payment" Type="int" Nullable="false" />
+          <Property Name="Accrual" Type="int" Nullable="false" />
+          <Property Name="Input" Type="int" Nullable="false" />
+          <Property Name="Data" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Headings__Id_Per__440B1D61">
+          <End Role="Personal_accounts" Type="Self.Personal_accounts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Headings" Type="Self.Headings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personal_accounts">
+              <PropertyRef Name="Id_Personal_accounts" />
+            </Principal>
+            <Dependent Role="Headings">
+              <PropertyRef Name="Id_Personal_accounts" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payments__Id_Per__46E78A0C">
+          <End Role="Personal_accounts" Type="Self.Personal_accounts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personal_accounts">
+              <PropertyRef Name="Id_Personal_accounts" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="Id_Personal_accounts" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Personal___Id_Us__3E52440B">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Personal_accounts" Type="Self.Personal_accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id_User" />
+            </Principal>
+            <Dependent Role="Personal_accounts">
+              <PropertyRef Name="Id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Saldo__Id_Person__412EB0B6">
+          <End Role="Personal_accounts" Type="Self.Personal_accounts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Saldo" Type="Self.Saldo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personal_accounts">
+              <PropertyRef Name="Id_Personal_accounts" />
+            </Principal>
+            <Dependent Role="Saldo">
+              <PropertyRef Name="Id_Personal_accounts" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__Id_Role__3A81B327">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id_Role" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="Id_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ModelDbContainer">
+          <EntitySet Name="Headings" EntityType="Self.Headings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Personal_accounts" EntityType="Self.Personal_accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Saldo" EntityType="Self.Saldo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SaldoView" EntityType="Self.SaldoView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SaldoView].[Number] AS [Number], 
+    [SaldoView].[Payment] AS [Payment], 
+    [SaldoView].[Accrual] AS [Accrual], 
+    [SaldoView].[Input] AS [Input], 
+    [SaldoView].[Data] AS [Data]
+    FROM [dbo].[SaldoView] AS [SaldoView]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Headings__Id_Per__440B1D61" Association="Self.FK__Headings__Id_Per__440B1D61">
+            <End Role="Personal_accounts" EntitySet="Personal_accounts" />
+            <End Role="Headings" EntitySet="Headings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payments__Id_Per__46E78A0C" Association="Self.FK__Payments__Id_Per__46E78A0C">
+            <End Role="Personal_accounts" EntitySet="Personal_accounts" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Personal___Id_Us__3E52440B" Association="Self.FK__Personal___Id_Us__3E52440B">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Personal_accounts" EntitySet="Personal_accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Saldo__Id_Person__412EB0B6" Association="Self.FK__Saldo__Id_Person__412EB0B6">
+            <End Role="Personal_accounts" EntitySet="Personal_accounts" />
+            <End Role="Saldo" EntitySet="Saldo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__Id_Role__3A81B327" Association="Self.FK__Users__Id_Role__3A81B327">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ModelDb" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Headings">
+          <Key>
+            <PropertyRef Name="Id_Headings" />
+          </Key>
+          <Property Name="Id_Headings" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Accrual" Type="Int32" Nullable="false" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Id_Personal_accounts" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Personal_accounts" Relationship="Self.FK__Headings__Id_Per__440B1D61" FromRole="Headings" ToRole="Personal_accounts" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="Id_Payment" />
+          </Key>
+          <Property Name="Id_Payment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Payment" Type="Int32" Nullable="false" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Id_Personal_accounts" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Personal_accounts" Relationship="Self.FK__Payments__Id_Per__46E78A0C" FromRole="Payments" ToRole="Personal_accounts" />
+        </EntityType>
+        <EntityType Name="Personal_accounts">
+          <Key>
+            <PropertyRef Name="Id_Personal_accounts" />
+          </Key>
+          <Property Name="Id_Personal_accounts" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Apartment_Number" Type="Int32" Nullable="false" />
+          <Property Name="Id_User" Type="Int32" />
+          <NavigationProperty Name="Headings" Relationship="Self.FK__Headings__Id_Per__440B1D61" FromRole="Personal_accounts" ToRole="Headings" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK__Payments__Id_Per__46E78A0C" FromRole="Personal_accounts" ToRole="Payments" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Personal___Id_Us__3E52440B" FromRole="Personal_accounts" ToRole="Users" />
+          <NavigationProperty Name="Saldo" Relationship="Self.FK__Saldo__Id_Person__412EB0B6" FromRole="Personal_accounts" ToRole="Saldo" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id_Role" />
+          </Key>
+          <Property Name="Id_Role" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Users__Id_Role__3A81B327" FromRole="Roles" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Saldo">
+          <Key>
+            <PropertyRef Name="Id_Saldo" />
+          </Key>
+          <Property Name="Id_Saldo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Input" Type="Int32" Nullable="false" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Id_Personal_accounts" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Personal_accounts" Relationship="Self.FK__Saldo__Id_Person__412EB0B6" FromRole="Saldo" ToRole="Personal_accounts" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id_User" />
+          </Key>
+          <Property Name="Id_User" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Id_Role" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Personal_accounts" Relationship="Self.FK__Personal___Id_Us__3E52440B" FromRole="Users" ToRole="Personal_accounts" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK__Users__Id_Role__3A81B327" FromRole="Users" ToRole="Roles" />
+        </EntityType>
+        <Association Name="FK__Headings__Id_Per__440B1D61">
+          <End Role="Personal_accounts" Type="Self.Personal_accounts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Headings" Type="Self.Headings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personal_accounts">
+              <PropertyRef Name="Id_Personal_accounts" />
+            </Principal>
+            <Dependent Role="Headings">
+              <PropertyRef Name="Id_Personal_accounts" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payments__Id_Per__46E78A0C">
+          <End Role="Personal_accounts" Type="Self.Personal_accounts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personal_accounts">
+              <PropertyRef Name="Id_Personal_accounts" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="Id_Personal_accounts" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Personal___Id_Us__3E52440B">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Personal_accounts" Type="Self.Personal_accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id_User" />
+            </Principal>
+            <Dependent Role="Personal_accounts">
+              <PropertyRef Name="Id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Saldo__Id_Person__412EB0B6">
+          <End Role="Personal_accounts" Type="Self.Personal_accounts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Saldo" Type="Self.Saldo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personal_accounts">
+              <PropertyRef Name="Id_Personal_accounts" />
+            </Principal>
+            <Dependent Role="Saldo">
+              <PropertyRef Name="Id_Personal_accounts" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__Id_Role__3A81B327">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id_Role" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="Id_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BalanceDb" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Headings" EntityType="Self.Headings" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" />
+          <EntitySet Name="Personal_accounts" EntityType="Self.Personal_accounts" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" />
+          <EntitySet Name="Saldo" EntityType="Self.Saldo" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK__Headings__Id_Per__440B1D61" Association="Self.FK__Headings__Id_Per__440B1D61">
+            <End Role="Personal_accounts" EntitySet="Personal_accounts" />
+            <End Role="Headings" EntitySet="Headings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payments__Id_Per__46E78A0C" Association="Self.FK__Payments__Id_Per__46E78A0C">
+            <End Role="Personal_accounts" EntitySet="Personal_accounts" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Personal___Id_Us__3E52440B" Association="Self.FK__Personal___Id_Us__3E52440B">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Personal_accounts" EntitySet="Personal_accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Saldo__Id_Person__412EB0B6" Association="Self.FK__Saldo__Id_Person__412EB0B6">
+            <End Role="Personal_accounts" EntitySet="Personal_accounts" />
+            <End Role="Saldo" EntitySet="Saldo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__Id_Role__3A81B327" Association="Self.FK__Users__Id_Role__3A81B327">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="SaldoView" EntityType="ModelDb.SaldoView" />
+        </EntityContainer>
+        <EntityType Name="SaldoView">
+          <Key>
+            <PropertyRef Name="Number" />
+            <PropertyRef Name="Payment" />
+            <PropertyRef Name="Accrual" />
+            <PropertyRef Name="Input" />
+            <PropertyRef Name="Data" />
+          </Key>
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <Property Name="Payment" Type="Int32" Nullable="false" />
+          <Property Name="Accrual" Type="Int32" Nullable="false" />
+          <Property Name="Input" Type="Int32" Nullable="false" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ModelDbContainer" CdmEntityContainer="BalanceDb">
+          <EntitySetMapping Name="Headings">
+            <EntityTypeMapping TypeName="ModelDb.Headings">
+              <MappingFragment StoreEntitySet="Headings">
+                <ScalarProperty Name="Id_Headings" ColumnName="Id_Headings" />
+                <ScalarProperty Name="Accrual" ColumnName="Accrual" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Id_Personal_accounts" ColumnName="Id_Personal_accounts" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="ModelDb.Payments">
+              <MappingFragment StoreEntitySet="Payments">
+                <ScalarProperty Name="Id_Payment" ColumnName="Id_Payment" />
+                <ScalarProperty Name="Payment" ColumnName="Payment" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Id_Personal_accounts" ColumnName="Id_Personal_accounts" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Personal_accounts">
+            <EntityTypeMapping TypeName="ModelDb.Personal_accounts">
+              <MappingFragment StoreEntitySet="Personal_accounts">
+                <ScalarProperty Name="Id_Personal_accounts" ColumnName="Id_Personal_accounts" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Apartment_Number" ColumnName="Apartment_Number" />
+                <ScalarProperty Name="Id_User" ColumnName="Id_User" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="ModelDb.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Id_Role" ColumnName="Id_Role" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Saldo">
+            <EntityTypeMapping TypeName="ModelDb.Saldo">
+              <MappingFragment StoreEntitySet="Saldo">
+                <ScalarProperty Name="Id_Saldo" ColumnName="Id_Saldo" />
+                <ScalarProperty Name="Input" ColumnName="Input" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Id_Personal_accounts" ColumnName="Id_Personal_accounts" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ModelDb.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id_User" ColumnName="Id_User" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Id_Role" ColumnName="Id_Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaldoView">
+            <EntityTypeMapping TypeName="ModelDb.SaldoView">
+              <MappingFragment StoreEntitySet="SaldoView">
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Input" ColumnName="Input" />
+                <ScalarProperty Name="Accrual" ColumnName="Accrual" />
+                <ScalarProperty Name="Payment" ColumnName="Payment" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

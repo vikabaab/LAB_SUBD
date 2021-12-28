@@ -1,0 +1,26 @@
+﻿@model BalanceProject2.Models.Roles
+
+<h3>Удаление роли</h3>
+<div>
+    <h4>Роли</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-danger" /> |
+            @Html.ActionLink("Вернуться к спику ролей", "ListRoles")
+        </div>
+    }
+</div>

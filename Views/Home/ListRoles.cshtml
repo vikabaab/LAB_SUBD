@@ -1,0 +1,28 @@
+﻿@model IEnumerable<BalanceProject2.Models.Roles>
+<table class="table">
+    <tr>
+        <th>
+            <h4>Роли</h4>
+        </th>
+        <th>
+            <form action="~/Home/AddRoles">
+                <button class="btn btn-primary">Добавить новую роль</button>
+            </form>
+        </th>
+    </tr>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "UpdateRoles", new { id = item.Id_Role })
+            @Html.ActionLink("Удалить", "DeleteRoles", new { id = item.Id_Role })
+        </td>
+    </tr>
+}
+
+</table>
+<div>
+    @Html.ActionLink("Админская панель", "AdminPanel")
+</div>

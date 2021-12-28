@@ -1,0 +1,43 @@
+﻿@model IEnumerable<BalanceProject2.Models.Saldo>
+
+<form action="~/Home/AddS">
+    <button class="btn btn-primary">Добавить сальдо</button>
+</form>
+<table class="table">
+    <tr>
+        <th>
+            Сальдо
+        </th>
+        <th>
+            Дата
+        </th>
+        <th>
+            Фамилия
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Input)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Personal_accounts.Surname)
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "UpdateS", new { id = item.Id_Saldo }) |
+                @Html.ActionLink("Удалить ", "DeleteS", new { id = item.Id_Saldo })
+            </td>
+        </tr>
+    }
+
+</table>
+<div>
+    @Html.ActionLink("Админская панель", "AdminPanel")
+</div>
+

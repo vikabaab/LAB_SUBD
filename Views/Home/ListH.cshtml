@@ -1,0 +1,41 @@
+﻿@model IEnumerable<BalanceProject2.Models.Headings>
+
+<form action="~/Home/AddH">
+    <button class="btn btn-primary">Добавить начисления</button>
+</form>
+<table class="table">
+    <tr>
+        <th>
+            Начисления
+        </th>
+        <th>
+            Дата
+        </th>
+        <th>
+            Фамилия
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Accrual)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Personal_accounts.Surname)
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "UpdateH", new { id=item.Id_Headings }) |
+            @Html.ActionLink("Удалить", "DeleteH", new { id=item.Id_Headings })
+        </td>
+    </tr>
+}
+
+</table>
+<div>
+    @Html.ActionLink("Админская панель", "AdminPanel")
+</div>

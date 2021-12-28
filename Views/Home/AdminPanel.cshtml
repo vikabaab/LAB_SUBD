@@ -1,0 +1,29 @@
+﻿@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="~/Home/ListUsers">Работа с пользователями></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="~/Home/ListRoles">Работа с ролями></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="~/Home/ListPA">Работа с лицевым счётом></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="~/Home/ListH">Работа с начислениями></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="~/Home/ListP">Работа с выплатами></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="~/Home/ListS">Работа с сальдо></a>
+                </li>
+            </ul>
+        </div>
+    }
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
